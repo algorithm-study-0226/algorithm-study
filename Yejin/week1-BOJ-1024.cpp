@@ -1,3 +1,4 @@
+// 수열의 합
 #include <iostream>
 #include <algorithm>
 #include <vector>

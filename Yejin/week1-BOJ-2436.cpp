@@ -1,3 +1,4 @@
+// 공약수
 #include <iostream>
 #include <algorithm>
 #include <vector>
