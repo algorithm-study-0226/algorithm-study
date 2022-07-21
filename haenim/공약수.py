@@ -1,7 +1,9 @@
 """
+공약수 
+
 두 개의 자연수가 주어졌을 때, 
 이 두 수를 최대공약수와 최소공배수로 하는 두 개의 자연수를 구하는 프로그램을 작성하시오. 
-
+ex) 6 180
 
 두 개의 자연수 쌍이 여러 개 있는 경우에는 두 자연수의 합이 최소가 되는 두 수를 출력한다
 
@@ -41,9 +43,10 @@ a,b를 구하기 위해 사용할 수 있는 건 l,g
 
 --------
 
-1. for문을 돌면서 a*b의 약수 두개를 뽑음
-2. 서로소면 후보에서 탈락
+1. for문을 돌면서 a*b(즉 l/g)의 약수 두개를 뽑음
+2. 서로소아니면 후보에서 탈락
 3. 나온 후보들 중 두 값의 차이가 최소인 걸 찾아서 출력
+
 
 """
 
@@ -66,31 +69,22 @@ def gcd(a, b):
     return gcd(b, a % b)
 
 
+# 1 2  3 4 6 12
+
 for a in range(1, int(sqrt(divide)) + 1):  # 1부터 divide의 제곱근까지 돌면서
     b = int(divide / a)  # b = (l/g)/a
 
-    if divide % a != 0:  # 약수가 아니면 패스
-        continue
-
-    if gcd(a, b) != 1:  # 서로소 아니면 패스
-        continue
-
-    if b - a < min_sum:
-        min_sum = b - a
-        answer = f"{a*g} {b*g}"
+    if divide % a == 0 and gcd(a, b) == 1:  # 약수고 서로소면
+        if b - a < min_sum:  # 합이 최소면
+            min_sum = b - a
+            answer = f"{a*g} {b*g}"
 
 print(answer)
 
-# for a in range(int(sqrt(divide)), 0, -1):  #반대로 돌면서
+
+# for a in range(int(sqrt(divide)), 0, -1):  # 반대로 돌면서
 #     b = int(divide / a)  # b = (l/g)/a
 
-#     if divide % a != 0:  # 약수가 아니면 패스
-#         continue
-
-#     if gcd(a, b) != 1:  # 서로소 아니면 패스
-#         continue
-
-#     if b - a < min_sum:
-#         min_sum = b - a
+#     if divide % a == 0 and gcd(a, b) == 1:  # 약수고 서로소면
 #         print(a * g, b * g)
 #         break
