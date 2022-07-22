@@ -1,6 +1,6 @@
 /**
- * @file test.c
- * @author your name (you@domain.com)
+ * @file 23564.c
+ * @author Woolee (lebind12@naver.com)
  * @brief https://www.acmicpc.net/problem/23564
  * @version 0.1
  * @date 2022-07-21
