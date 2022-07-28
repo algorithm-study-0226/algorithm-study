@@ -23,7 +23,7 @@ import sys
 input = sys.stdin.readline
 n = int(input())
 
-queue = deque([(n, 0)])
+queue = deque([(n, 0)])  # 현재 숫자, 연산 횟수
 
 min_count = 10000000
 

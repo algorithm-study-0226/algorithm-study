@@ -30,7 +30,7 @@ def recursion(n, previous_pattern_length):
     if n == 0:  # 첫 번 째 패턴을 찾을 경우
         s[0] = T[0]
 
-        for i in range(0, T_length):
+        for i in range(0, T_length):  # 첫번 째 알파벳이 반복된 횟수 계산
             if s[0] != T[i]:
                 break
 
@@ -48,7 +48,7 @@ def recursion(n, previous_pattern_length):
         # sn 은 이전 패턴 바로 뒤의 알파벳
         s[n] = T[previous_pattern_length]
 
-        # 처음 ~ 이전패턴 바로 뒤의 알파벳
+        # 서브패턴 = 처음 ~ 이전패턴 바로 뒤의 알파벳
         sub_pattern = T[: previous_pattern_length + 1]
         sub_pattern_length = len(sub_pattern)
 
