@@ -1,9 +1,9 @@
 /**
  * @file 2436.c
  * @author Woolee (lebind12@naver.com)
- * @brief https://www.acmicpc.net/problem/2981
+ * @brief https://www.acmicpc.net/problem/2436
  * @version 0.1
- * @date 2022-07-27
+ * @date 2022-07-28
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -11,103 +11,64 @@
 
 #include <stdio.h>
 
-void sort_array(int *array, int size) {
-    int i, j;
-    int tmp;
+int euc(int n, int m) {
+    int r;
 
-    for (i = size - 1; i >= 1; i--) {
-        for (j = 1; j <= i; j++) {
-            if (array[j-1] > array[j]) {
-                tmp = array[j-1];
-                array[j-1] = array[j];
-                array[j] = tmp;    
-            }
-        }
+    r = 1;
+    while (r) {
+        r = n % m;
+        n = m;
+        m = r;
     }
+    return (n);
 }
 
-int get_root(int value) {
+int get_root(int n) {
     int i;
 
     i = 1;
     while (1) {
-        if (i * i <= value && (i + 1) * (i + 1) > value)
+        if (i * i <= n && (i+1)*(i+1) > n)
             return (i);
         i++;
     }
 }
 
-void create_array(int *array, int *ret_arr, int size) {
-    int i;
+void solve(int gcd, int lcm) {
+    // a * b * gcd = lcm (a와 b는 서로소)
+    // lcm / gcd = a * b
+    // lcm / gcd 의 약수 중 서로소면서 서로의 차이가 최소인 값을 찾으면 된다.
+    int div;
+    int a;
+    int b;
+    int sub;
+    int div_root;
+    int answer[2];
 
-    for (i = 1; i < size; i++)
-        ret_arr[i-1] = array[i] - array[i-1];
-}
-
-int get_minimum(int *array, int size) {
-    int i;
-    int minimum;
-
-    minimum = 1000000000;
-    for (i = 0; i < size; i++) {
-        if (minimum > array[i])
-            minimum = array[i];
-    }
-
-    return (minimum);
-}
-
-int is_gcd(int value, int *array, int size) {
-    int i;
-
-    for (i = 0; i < size; i++) {
-        if (array[i] % value != 0)
-            return (-1);
-    }
-    return (1);
-}
-
-void solve(int *array, int size) {
-    int diff_array[100];
-    int division_array[100];
-    int gcd;
-    int count;
-    int i;
-    int min, max;
-
-    sort_array(array, size);
-    // print_array(array, size);
-    // array를 이용해서 kn - kn-1의 배열을 생성
-    create_array(array, diff_array, size);
-    // print_array(diff_array, size - 1);
-
-    count = 1;
-    division_array[0] = 1;
-    min = get_minimum(diff_array, size - 1);
-    for (gcd = 2; gcd <= get_root(min); gcd++) {
-        if (is_gcd(gcd, diff_array, size - 1) > 0){
-            printf("%d ", gcd);
-            division_array[count] = gcd;
-            count++;
+    div = lcm / gcd;
+    sub = 99999999;
+    div_root = get_root(div);
+    for (a = 1; a <= div_root; a++) {
+        b = div / a;
+        if (div % a != 0)
+            continue;
+        if (euc(a, b) != 1)
+            continue;
+        if (b - a < sub){
+            sub = b - a;
+            answer[0] = a;
+            answer[1] = b; 
         }
     }
-    for (i = count - 1; i >= 0; i--) {
-        if (i == 0)
-            printf("%d", min / division_array[i]);
-        else if (i == count - 1 && min / division_array[i] == division_array[i])
-            continue;
-        else
-            printf("%d ", min / division_array[i]);
-    }
+    printf("%d %d", answer[0] * gcd, answer[1] * gcd);
 }
 
 int main(void) {
-    int N;
-    int array[100];
-    int i;
+    int a, b;
 
-    scanf("%d", &N);
-    for (i = 0; i < N; i++)
-        scanf("%d", &array[i]);
-    solve(array, N);
+    scanf("%d %d", &a, &b); 
+    // A * B = gcd * lcm
+    solve(a, b);
+
+    return (0);
 }
