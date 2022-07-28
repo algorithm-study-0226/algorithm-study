@@ -46,10 +46,7 @@ def recursion(n, previous_pattern_length):
         s.append("")
 
         # sn 은 이전 패턴 바로 뒤의 알파벳
-        try:
-            s[n] = T[previous_pattern_length]
-        except:
-            print("")
+        s[n] = T[previous_pattern_length]
 
         # 처음 ~ 이전패턴 바로 뒤의 알파벳
         sub_pattern = T[: previous_pattern_length + 1]
