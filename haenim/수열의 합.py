@@ -34,25 +34,3 @@ def solution():
 
 
 print(solution())
-
-
-# start = n // 2
-# end = start + l
-
-# while True:
-#     if n < start:
-#         l += 1
-
-#     sum = start * (l + 1) + l * (l + 1) / 2
-
-#     if sum == n:
-#         print()
-
-#     # 합이 작으면 키워야 되니까 오른쪽으로 한칸 이동
-#     if sum < n:
-#         start += 1
-
-#     else:
-#         start -= 1
-
-#     print(sum)
