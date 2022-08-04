@@ -31,11 +31,9 @@ void print_array(int *array, int size) {
 void moving(int *array, int *stack, int *count, int max_count, int *array_size)
 {
     int i;
-    int j;
     int stack_size;
 
     i = 0;
-    j = 0;
     stack_size = 0;
     for (i = 0; i < *array_size; i++) {
         if (*count == max_count) {
