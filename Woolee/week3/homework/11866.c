@@ -37,25 +37,18 @@ void moving(int *array, int *stack, int *count, int max_count, int *array_size)
     i = 0;
     j = 0;
     stack_size = 0;
-    while (1) {
-        if (array[i] == -1) {
-            stack[stack_size] = -1;
-            *array_size = stack_size;
-            printf("\n");
-            return;
-        }
+    for (i = 0; i < *array_size; i++) {
         if (*count == max_count) {
             *count = 1;
             answer[answer_size] = array[i];
             answer_size++;
-            i++;
             continue;
         }
         stack[stack_size] = array[i];
         stack_size++;
         *count += 1;
-        i++;
     }
+    *array_size = stack_size;
 }
 
 void solve(int N, int K) {
@@ -74,7 +67,6 @@ void solve(int N, int K) {
     for (i = 0; i < N; i++) {
         array[i] = i + 1;
     }
-    array[i] = -1;
     while (array_size > 0) {
         // N명의 사람을 스택에 쌓는데 K 번째는 안 쌓고 answer 배열에 넣음
         moving(array, stack, &count, K, &array_size);
