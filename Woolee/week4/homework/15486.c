@@ -11,9 +11,9 @@
 
 #include <stdio.h>
 
-int T[1500000];
-int P[1500000];
-int dp[1500000];
+int T[1500002];
+int P[1500002];
+int dp[1500002];
 int size;
 
 void solve() {
@@ -24,10 +24,10 @@ void solve() {
         dp[size - 1] = 0;
 
     for (i = size - 2; i >= 0; i--) {
-        if (i + T[i] >= size) {
-            dp[i] = dp[i + 1]; 
+        if (i + T[i] > size) {
+            dp[i] = dp[i + 1];
         }
-        if (dp[i + 1] <= P[i] + dp[i + T[i]]) {
+        else if (dp[i + 1] <= P[i] + dp[i + T[i]]) {
             dp[i] = P[i] + dp[i + T[i]];
         }
         else {
@@ -42,7 +42,7 @@ int main(void) {
 
     scanf("%d", &size);
     for (i = 0; i < size; i++) 
-        scanf("%d %d", T[i], P[i]);
+        scanf("%d %d", &T[i], &P[i]);
     for (i = 0; i < size; i++)
         dp[i] = 0;
     solve();
