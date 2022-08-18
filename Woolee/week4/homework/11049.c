@@ -3,62 +3,60 @@
  * @author Woolee (lebind12@naver.com)
  * @brief https://www.acmicpc.net/problem/11049
  * @version 0.1
- * @date 2022-08-11
+ * @date 2022-08-15
  * 
  * @copyright Copyright (c) 2022
  * 
  */
 
 #include <stdio.h>
+#define INF 2100000000
 
 int M[501][2];
-int N;
+int dp[501][501];
 
-int min(int a, int b) {
+int get_min(int a, int b) {
     if (a > b)
         return (b);
     else
         return (a);
 }
 
-void solve() {
-    int dp[501][501];
-    int i, j;
+void solve(int N) {
+    int i, j, k;
+    int minimum_value;
+    int value;
 
+    minimum_value = INF;
+    // dp[i][i+1] 은 그냥 곱셈 
     for (i = 1; i < N; i++) {
-        dp[i-1][i] = M[i-1][0] * M[i-1][1] * M[i][1];
+            dp[i][i+1] = M[i][0] * M[i+1][0] * M[i+1][1];
     }
 
-    // dp[i][j] = min(dp[i][j-1] + M[i][0]*M[j-1][1]*M[j][1], dp[i+1][j] + M[i][0] * M[i+i][0] * M[j][1])
-    // 3
-    // 5 3
-    // 3 2
-    // 2 6
-    // dp[1][3] = min(dp[1][2] + M[1][0] * M[2][1] * M[3][1], dp[2][3] + M[1][0] * M[2][0] * M[3][1])
-    
+    // i는 행렬간의 거리
     for (i = 2; i <= N - 1; i++) {
-        for (j = i; j < N; j++) {
-            dp[j-i][j] = min(dp[j-i][j-i+1] + M[j-i][0] * M[j-1][1] * M[j][1], 
-                             dp[j-i+1][j] + M[j-i][0] * M[j-i+1][0] * M[j][1]);
+        // j는 시작 지점, j + i 가 N을 넘기면 안됨
+        for (j = 1; j + i <= N; j++) {
+            for (k = 0; k < i; k++) {
+                value = dp[j][j + k] + dp[j + k + 1][j + i] + (M[j][0] * M[j + k][1] * M[j + i][1]);
+                minimum_value = get_min(value, minimum_value);
+            }
+            // 최소값을 구하고 미니멈 값을 dp에 넣어준 뒤 미니멈을 다시 최대로 돌림
+            dp[j][j+i] = minimum_value;
+            minimum_value = INF;
         }
     }
 
-    for (i = 0; i < N; i++) {
-        for (j = 0; j < N; j++) {
-            printf("%d ", dp[i][j]);
-        }
-        printf("\n");
-    }
-
-    printf("%d", dp[0][N-1]);
+    printf("%d", dp[1][N]);
 }
 
 int main(void) {
+    int N;
     int i;
 
     scanf("%d", &N);
-    for (i = 0; i < N; i++)
+    for (i = 1; i <= N; i++)
         scanf("%d %d", &M[i][0], &M[i][1]);
-
-    solve();
+    solve(N);
+    return (0);
 }
