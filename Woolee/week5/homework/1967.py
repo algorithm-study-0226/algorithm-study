@@ -1,7 +1,7 @@
 from collections import deque
 import sys
 
-sys.setrecursionlimit(10**6)
+sys.setrecursionlimit(10**4)
 N = int(sys.stdin.readline())
 graph = [[] for _ in range(N + 1)]
 visited = [0] * (N + 1)
